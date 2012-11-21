@@ -324,6 +324,7 @@ int g2d_mmap(struct file *file, struct vm_area_struct * vma)
 
 	physics =  g2d_mem[g2d_mem_sel].phy_addr;
 	mypfn = physics >> PAGE_SHIFT;
+	vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
 
 	if(remap_pfn_range(vma,vma->vm_start,mypfn,vmsize,vma->vm_page_prot))
 		return -EAGAIN;
